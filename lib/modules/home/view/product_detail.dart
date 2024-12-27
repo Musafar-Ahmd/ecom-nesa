@@ -1,5 +1,7 @@
 import 'package:ecom_nesa/common/custom_button.dart';
+import 'package:ecom_nesa/constants/app_colors.dart';
 import 'package:ecom_nesa/modules/home/view/edit_product.dart';
+import 'package:ecom_nesa/modules/home/view/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,89 +31,108 @@ class _ProductDetailState extends State<ProductDetail> {
     final viewModel = Provider.of<HomeViewModel>(context);
     final product = viewModel.productById;
     var size = MediaQuery.of(context).size.width;
-    return Scaffold(
-      appBar: AppBar(
-        leading: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Icon(Icons.arrow_back)),
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 8.0),
-            child: Icon(Icons.favorite_border),
-          ),
-        ],
-        elevation: 0,
-      ),
-      body: SingleChildScrollView(
-        child: Column(children: [
-          SizedBox(height: size * .05),
-          _buildProductImagesSection(viewModel),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "\$ ${product?.price}",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: size * .04,
-                      color: Colors.black),
-                ),
-                SizedBox(height: size * .05),
-                Row(
-                  children: [
-                    Text(
-                      product?.title ?? "",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                          color: Colors.black),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: size * .02,
-                ),
-                SizedBox(height: size * .02),
-                Wrap(
-                  children: [
-                    Padding(
-                        padding: EdgeInsets.only(left: 0),
-                        child: Text(
-                          product?.description ?? "",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: size * .04,
-                              color: Colors.grey),
-                        ))
-                  ],
-                ),
-              ],
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()),
+          (route) => false,
+        );
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.scaffoldColor,
+        appBar: AppBar(
+          backgroundColor: AppColors.scaffoldColor,
+          leading: GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => HomePage()),
+                    (Route route) => false);
+              },
+              child: Icon(Icons.arrow_back)),
+          actions: [
+            Padding(
+              padding: EdgeInsets.only(right: 8.0),
+              child: Icon(Icons.favorite_border),
             ),
-          ),
-          SizedBox(
-            height: size * .1,
-          ),
-        ]),
-      ),
-      bottomSheet: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: CustomButton(
-            borderRadius: 8,
-            text: "Edit",
-            onTap: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (_) => EditProduct()));
-            }),
+          ],
+          elevation: 0,
+        ),
+        body: SingleChildScrollView(
+          child: Column(children: [
+            SizedBox(height: size * .05),
+            _buildProductImagesSection(viewModel),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "\$ ${product?.price ?? ""}",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: size * .07,
+                        color: Colors.blue),
+                  ),
+                  SizedBox(height: size * .05),
+                  Row(
+                    children: [
+                      Text(
+                        product?.title ?? "",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.black),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: size * .02,
+                  ),
+                  SizedBox(height: size * .02),
+                  Wrap(
+                    children: [
+                      Padding(
+                          padding: EdgeInsets.only(left: 0),
+                          child: Text(
+                            product?.description ?? "",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: size * .04,
+                                color: Colors.grey),
+                          ))
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: size * .1,
+            ),
+          ]),
+        ),
+        bottomSheet: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CustomButton(
+              borderRadius: 8,
+              text: "Edit Product",
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => EditProduct(
+                              desciption: "${product?.description}",
+                              name: "${product?.title}",
+                              price: "${product?.price}",
+                            )));
+              }),
+        ),
       ),
     );
   }
 
   Widget _buildProductImagesSection(HomeViewModel viewModel) {
-    // final viewModel = Provider.of<HomeViewModel>(context);
     final product = viewModel.productById;
     return Container(
       decoration: BoxDecoration(

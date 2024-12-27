@@ -1,11 +1,19 @@
 import 'package:ecom_nesa/common/custom_button.dart';
 import 'package:ecom_nesa/common/custom_input_decoration.dart';
+import 'package:ecom_nesa/constants/app_colors.dart';
 import 'package:ecom_nesa/modules/home/view_model/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class EditProduct extends StatefulWidget {
-  const EditProduct({super.key});
+  final String name;
+  final String price;
+  final String desciption;
+  const EditProduct(
+      {super.key,
+      required this.name,
+      required this.price,
+      required this.desciption});
 
   @override
   State<EditProduct> createState() => _EditProductState();
@@ -16,6 +24,15 @@ class _EditProductState extends State<EditProduct> {
   final _price = TextEditingController();
   final _description = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  @override
+  void initState() {
+    _name.text = widget.name;
+    _price.text = widget.price;
+
+    _description.text = widget.desciption;
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +40,9 @@ class _EditProductState extends State<EditProduct> {
 
     var size = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: AppColors.scaffoldColor,
       appBar: AppBar(
+        backgroundColor: AppColors.scaffoldColor,
         leading: GestureDetector(
             onTap: () {
               Navigator.pop(context);
@@ -90,7 +109,7 @@ class _EditProductState extends State<EditProduct> {
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
                       viewModel.updateProduct(viewModel.productById?.id,
-                          context, _name, _description, _price);
+                          context, _name.text, _description.text, _price.text);
                     }
                   },
                   text: "Update",
