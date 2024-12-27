@@ -41,9 +41,6 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: size * 0.1,
-            ),
             Padding(
               padding: const EdgeInsets.only(left: 16, right: 16),
               child: Text(
@@ -75,7 +72,7 @@ class _HomePageState extends State<HomePage> {
               child: Text(
                 "Latest Products",
                 style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 16,
                     fontWeight: FontWeight.w600,
                     color: Colors.black),
               ),

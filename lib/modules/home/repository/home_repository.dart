@@ -14,7 +14,7 @@ class HomeRepository {
 
       var dio = Dio();
       var response = await dio.request(
-        '${AppUrls.baseUrl}products/',
+        '${AppUrls.baseUrl}products',
         options: Options(
           method: 'GET',
         ),
@@ -50,7 +50,6 @@ class HomeRepository {
       if (response.statusCode == 200) {
         EasyLoading.dismiss();
 
-        print(response.data);
         return ProductById.fromJson(response.data);
       } else {
         EasyLoading.dismiss();

@@ -1,8 +1,9 @@
 class ProductList {
-  List<Products>? products;
   int? total;
   int? skip;
   int? limit;
+  List<Products>? products;
+
 
   ProductList({this.products, this.total, this.skip, this.limit});
 

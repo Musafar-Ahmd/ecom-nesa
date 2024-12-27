@@ -1,6 +1,7 @@
 import 'package:ecom_nesa/modules/home/model/products_model.dart';
 import 'package:ecom_nesa/modules/home/view/product_detail.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating/flutter_rating.dart';
 
 class AllProductsGridHome extends StatefulWidget {
   List<Products> products;
@@ -85,6 +86,15 @@ class _AllProductsGridHomeState extends State<AllProductsGridHome> {
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: Colors.black),
+                  ),
+                  SizedBox(
+                    height: size * 0.01,
+                  ),
+                  StarRating(
+                    color: Colors.amber,
+                    allowHalfRating: true,
+                    rating: products?.rating,
+                    starCount: 5,
                   ),
                 ],
               )),
