@@ -3,6 +3,7 @@ import 'package:ecom_nesa/constants/app_colors.dart';
 import 'package:ecom_nesa/modules/home/view/edit_product.dart';
 import 'package:ecom_nesa/modules/home/view/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating/flutter_rating.dart';
 import 'package:provider/provider.dart';
 
 import '../view_model/home_view_model.dart';
@@ -75,6 +76,17 @@ class _ProductDetailState extends State<ProductDetail> {
                         fontSize: size * .07,
                         color: Colors.blue),
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      StarRating(
+                        color: Colors.amber,
+                        allowHalfRating: true,
+                        rating: product?.rating,
+                        starCount: 5,
+                      ),
+                    ],
+                  ),
                   SizedBox(height: size * .05),
                   Row(
                     children: [
@@ -83,6 +95,43 @@ class _ProductDetailState extends State<ProductDetail> {
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
+                            color: Colors.black),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: size * .02),
+                  Row(
+                    children: [
+                      Text(
+                       "category : ",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.black),
+                      ),
+                      Text(
+                        product?.category ?? "",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.black),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        "qty : ",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                            color: Colors.black),
+                      ),
+                      Text(
+                        "${product?.stock}",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
                             color: Colors.black),
                       ),
                     ],
